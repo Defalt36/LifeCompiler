@@ -41,12 +41,12 @@ function runtest {
     fi
     
     # Test server
-    if [ $platform == "linux" ] ; then
+    if [[ $platform == "linux" ]] ; then
         cd $TESTBUILDPATH
         cp $GAMEDIR/server/OneLifeServer OneLifeServer
         ./OneLifeServer
         cd -
-    elif [ $platform == "windows" ] ; then
+    elif [[ $platform == "windows" ]] ; then
         cd $TESTBUILDPATH
         cp "$GAMEDIR/server/OneLifeServer.exe" "OneLifeServer.exe" 2>/dev/null || cp "$GAMEDIR/server/OneLifeServer" "OneLifeServer.exe"
         cmd.exe /c start "" "OneLifeServer.exe"
