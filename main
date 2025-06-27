@@ -125,9 +125,18 @@ function life {
 }
 
 function x-autostart {
-    echo -e "\n# Source LifeCompiler by Defalt36" >> ~/.bashrc
-    echo "source "${ASSISTANTDIR}/main"" >> ~/.bashrc
-    echo "Added LifeCompiler to ~/.bashrc. Please don't run this command again."
+    line1="# Source LifeCompiler by Defalt36" 
+    line2="source "${ASSISTANTDIR}/main""
+    
+    if grep -Fxq "$line1" ~/.bashrc ; then
+        sed -i "\|^${line1}\$|d" ~/.bashrc
+        sed -i "\|^${line2}\$|d" ~/.bashrc
+        echo "Removed LifeCompiler from ~/.bashrc."
+    else
+        echo -e "\n$line1" >> ~/.bashrc
+        echo -e "$line2" >> ~/.bashrc
+        echo "Added LifeCompiler to ~/.bashrc."
+    fi
 }
 
 function x-cat {
