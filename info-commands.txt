@@ -6,5 +6,6 @@ makeeditor...........Re-compile editor binary.
 makegame.............Re-compile game binary.
 makeserver...........Re-compile server binary.
 runtest..............Build game and server and run test.
+showhidden...........Show hidden commands.
 
 life..................Used to run scripts and commands.

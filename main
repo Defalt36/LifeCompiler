@@ -17,6 +17,9 @@ source $START_DIR/settings.sh
 chmod u+x -R $START_DIR
 
 
+function showhidden {
+    declare -F | awk '{print $NF}' | sort | egrep -v "^_"
+}
 function runtest {
     local platform=$1
     if [ $# -ne 1 ] ; then
