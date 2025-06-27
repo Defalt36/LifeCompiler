@@ -12,7 +12,6 @@ export DATADIR=$WORKDIR/OneLifeData7
 export TIMESTAMP=$(date '+(%F,%H%M)')
 export RELEASENAME=OneLife
 export TARGETSYSTEM=windows
-export TARGETCODE=5;
 
 export REMOTEGAME=OneLife
 export REMOTEGAME_USER=twohoursonelife

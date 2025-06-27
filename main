@@ -170,12 +170,12 @@ function x-libraries {
 function x-platform {
     local platform=$1
     if [ $# -ne 1 ] ; then
-        echo "No parameters provided, assuming: '$TARGETCODE'."
-        platform=$TARGETCODE
+        echo "No parameters provided, assuming: '$TARGETSYSTEM'."
+        platform=$TARGETSYSTEM
     fi
-    if [[ $1 == "linux" || $1 == "1" ]] ; then
+    if [[ $platform == "linux" || $platform == "1" ]] ; then
         platform=1
-    elif [[ $1 == "windows" || $1 == "5" ]] ; then
+    elif [[ $platform == "windows" || $platform == "5" ]] ; then
         platform=5
     fi
     cd $GAMEDIR
