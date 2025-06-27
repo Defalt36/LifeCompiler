@@ -127,9 +127,14 @@ function life {
 function x-autostart {
     echo -e "\n# Source LifeCompiler by Defalt36" >> ~/.bashrc
     echo "source "${ASSISTANTDIR}/main"" >> ~/.bashrc
+    echo "Added LifeCompiler to ~/.bashrc. Please don't run this command again."
 }
 
 function x-cat {
+    if [ $# -ne 1 ] ; then
+        echo "Parameter: script filename without format"
+        return
+    fi
     find $START_DIR/scripts -iname "$1.sh" -exec cat {} \;
     echo
 }
@@ -154,11 +159,12 @@ function x-cd {
 
 function x-default {
     cp -f $START_DIR/defaultsettings.sh $START_DIR/settings.sh
-    echo "settings.sh replaced by defaultsettings.sh"
+    echo "settings.sh replaced with defaultsettings.sh"
 }
 
 function x-libraries {
     7z x precompiled_libraries.zip -o"$LIBRARYDIR"
+    echo "Extracted pre-compiled libraries to $LIBRARYDIR"
 }
 
 function x-platform {
