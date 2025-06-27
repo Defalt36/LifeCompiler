@@ -16,12 +16,15 @@ fi
 source $START_DIR/settings.sh
 chmod u+x -R $START_DIR
 
-function testgame {
+
+function runtest {
     local platform=$1
     if [ $# -ne 1 ] ; then
         echo "No parameters provided, assuming: '$TARGETSYSTEM'."
         platform=$TARGETSYSTEM
     fi
+    
+    # Test game
     if [[ $platform == "linux" ]] ; then
         cd $TESTBUILDPATH
         cp $GAMEDIR/gameSource/OneLife OneLife
@@ -33,13 +36,8 @@ function testgame {
         cmd.exe /c start "" "OneLife.exe"
         cd -
     fi
-}
-function testserver {
-    local platform=$1
-    if [ $# -ne 1 ] ; then
-        echo "No parameters provided, assuming: '$TARGETSYSTEM'."
-        platform=$TARGETSYSTEM
-    fi
+    
+    # Test server
     if [ $platform == "linux" ] ; then
         cd $TESTBUILDPATH
         cp $GAMEDIR/server/OneLifeServer OneLifeServer
@@ -51,10 +49,6 @@ function testserver {
         cmd.exe /c start "" "OneLifeServer.exe"
         cd -
     fi
-}
-function runtest {
-    $START_DIR/scripts/makeTestBuild.sh $TARGETSYSTEM
-    testgame $TARGETSYSTEM & testserver $TARGETSYSTEM
 }
 function makegame {
     ( cd $GAMEDIR/gameSource ; make )
@@ -205,16 +199,11 @@ function x-reload {
     source $START_DIR/main
 }
 
-
-echo
-echo -e "The following functions can be used:\n"
+echo -e "\nThe following functions can be used:\n"
 #declare -F | awk '{print $NF}' | sort | egrep -v "^_"
 cat $START_DIR/info-commands.txt
 
-echo
-echo -e "The following scripts are avaliable:\n"
+echo -e "\nThe following scripts are avaliable:\n"
 find $START_DIR/scripts -type f -exec basename -s .sh {} \;
 
-echo
-echo "You can use the life command to run scripts above."
-echo
+echo -e "\nYou can use the life command to run scripts above.\n"

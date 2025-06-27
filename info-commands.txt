@@ -6,7 +6,5 @@ makeeditor...........Re-compile editor binary.
 makegame.............Re-compile game binary.
 makeserver...........Re-compile server binary.
 runtest..............Build game and server and run test.
-testgame.............Run game binary.
-testserver...........Run server binary.
 
 life..................Used to run scripts and commands.
