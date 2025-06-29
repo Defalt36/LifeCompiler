@@ -60,17 +60,17 @@ if [[ $libz == "true" ]] ; then
     
     if [ ! -d zlib-1.2.12 ] ; then
         wget http://zlib.net/fossils/zlib-1.2.12.tar.gz -O- | tar xfz -
-    
-        cd zlib-1.2.12
-        sudo make -f win32/Makefile.gcc \
-            BINARY_PATH=$prefixdir/bin \
-            INCLUDE_PATH=$prefixdir/include \
-            LIBRARY_PATH=$prefixdir/lib \
-            SHARED_MODE=1 \
-            PREFIX=$host- \
-            install
-        cd ..
     fi
+    
+    cd zlib-1.2.12 || exit 1
+    sudo make -f win32/Makefile.gcc \
+        BINARY_PATH=$prefixdir/bin \
+        INCLUDE_PATH=$prefixdir/include \
+        LIBRARY_PATH=$prefixdir/lib \
+        SHARED_MODE=1 \
+        PREFIX=$host- \
+        install
+    cd ..
 fi
 
 
@@ -79,23 +79,23 @@ if [[ $libpng == "true" ]] ; then
     echo
     echo "Preparing LibPNG..."
     
-    if [ ! -d libpng-1.6.37    ] ; then
+    if [ ! -d libpng-1.6.37 ] ; then
         wget http://downloads.sourceforge.net/project/libpng/libpng16/1.6.37/libpng-1.6.37.tar.gz -O- | tar xfz -
         # if wget fails try alternative mirror
         if [ $? -ne 0 ]; then
             wget https://github.com/pnggroup/libpng/archive/refs/tags/v1.6.37.tar.gz -O- | tar xfz -
         fi
-    
-        cd libpng-1.6.37
-        ./configure \
-            --host=$host \
-            --prefix=$prefixdir \
-            CPPFLAGS="-I${prefixdir}/include" \
-            LDFLAGS="-L${prefixdir}/lib"
-        make
-        sudo make install
-        cd ..
     fi
+    
+    cd libpng-1.6.37 || exit 1
+    ./configure \
+        --host=$host \
+        --prefix=$prefixdir \
+        CPPFLAGS="-I${prefixdir}/include" \
+        LDFLAGS="-L${prefixdir}/lib"
+    make
+    sudo make install
+    cd ..
 fi
 
 if [[ $libsdl == "true" ]] ; then
@@ -108,20 +108,20 @@ if [[ $libsdl == "true" ]] ; then
         if [ $? -ne 0 ]; then
             wget https://github.com/libsdl-org/SDL-1.2/archive/refs/tags/release-1.2.15.tar.gz -O- | tar xfz -
         fi
-    
-        cd SDL-1.2.15
-        ./configure \
-            --bindir=$prefixdir/bin \
-            --libdir=$prefixdir/lib \
-            --includedir=$prefixdir/include \
-            --host=$host \
-            --prefix=$prefixdir \
-            CPPFLAGS="-I${prefixdir}/include" \
-            LDFLAGS="-L${prefixdir}/lib"
-        make
-        sudo make install
-        cd ..
     fi
+
+    cd SDL-1.2.15 || exit 1
+    ./configure \
+        --bindir=$prefixdir/bin \
+        --libdir=$prefixdir/lib \
+        --includedir=$prefixdir/include \
+        --host=$host \
+        --prefix=$prefixdir \
+        CPPFLAGS="-I${prefixdir}/include" \
+        LDFLAGS="-L${prefixdir}/lib"
+    make
+    sudo make install
+    cd ..
 fi
 
 if [[ $libfreetype == "true" ]] ; then
@@ -134,20 +134,20 @@ if [[ $libfreetype == "true" ]] ; then
         if [ $? -ne 0 ]; then
             wget https://download.savannah.gnu.org/releases/freetype/freetype-2.13.2.tar.gz -O- | tar xfz -
         fi
-    
-        cd freetype-2.13.2
-        ./configure \
-            --prefix=$prefixdir \
-            --build=$build \
-            --host=$host \
-            --enable-static \
-            CPPFLAGS="-I${prefixdir}/include" \
-            LDFLAGS="-L${prefixdir}/lib" \
-            PKG_CONFIG_LIBDIR=$prefixdir/lib/pkgconfig
-        make
-        sudo make install
-        cd ..
     fi
+    
+    cd freetype-2.13.2 || exit 1
+    ./configure \
+        --prefix=$prefixdir \
+        --build=$build \
+        --host=$host \
+        --enable-static \
+        CPPFLAGS="-I${prefixdir}/include" \
+        LDFLAGS="-L${prefixdir}/lib" \
+        PKG_CONFIG_LIBDIR=$prefixdir/lib/pkgconfig
+    make
+    sudo make install
+    cd ..
 fi
 
 
