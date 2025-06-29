@@ -9,7 +9,7 @@ export MINORDIR=$WORKDIR/minorGems
 export DATADIR=$WORKDIR/OneLifeData7
 
 
-export TIMESTAMP=$(date '+(%F,%H%M)')
+export BUILDSTAMP=$(date '+(%F_%Hh%Mm)')
 export RELEASENAME=OneLife
 export TARGETSYSTEM=windows
 

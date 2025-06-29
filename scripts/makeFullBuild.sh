@@ -8,40 +8,45 @@ fi
 
 target=$1
 
-RELEASEDIR=$BUILDSDIR/$RELEASENAME_$TIMESTAMP
+RELEASEDIR="${BUILDSDIR}/${RELEASENAME}_${BUILDSTAMP}"
+mkdir $RELEASEDIR
 
 cd $GAMEDIR
 
-chmod u+x configure ./server/configure
+chmod u+x ./configure
+chmod u+x ./server/configure
+chmod u+x ./gameSource/makeEditor.sh
 
 if [ $target == "linux" ] ; then
 	./configure 1 || exit 1
     cd server
 	.configure 1 || exit 1
+    cd ..
 elif [ $target == "windows" ] ; then
 	./configure 5 || exit 1
 	cd server
     ./configure 5 || exit 1
+    cd ..
 fi
 
 cd gameSource
-
 make || exit 1
-
-./makeEditor.sh
+./makeEditor.sh || exit 1
 
 cd ../server
 make || exit 1
 
 cd $SCRIPTSDIR
 
-./gatherData.sh all $RELEASEDIR copy
-./gatherBuildFiles.sh game $RELEASEDIR
-./gatherBuildFiles.sh server $RELEASEDIR
-./gatherBinaries.sh $target all $RELEASEDIR
+echo "Gathering Files..."
 
-ln -sf $RELEASEDIR $RELEASENAME
+./gatherData.sh all "$RELEASEDIR" copy
+./gatherBuildFiles.sh game "$RELEASEDIR"
+./gatherBuildFiles.sh server "$RELEASEDIR"
+./gatherBinaries.sh "$target" all "$RELEASEDIR"
 
-7z a $RELEASEDIR.zip $RELEASENAME
+#ln -sf $RELEASEDIR $RELEASENAME
 
+echo "Compressing Files..."
 
+7z a $RELEASEDIR.zip $RELEASEDIR

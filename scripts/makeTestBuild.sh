@@ -13,9 +13,9 @@ mkdir $TESTDIR
 
 cd $GAMEDIR
 
-chmod u+x configure ./configure
-chmod u+x configure ./server/configure
-chmod u+x configure ./gameSource/makeEditor.sh
+chmod u+x ./configure
+chmod u+x ./server/configure
+chmod u+x ./gameSource/makeEditor.sh
 
 if [[ $target == "linux" ]] ; then
 	./configure 1 || exit 1
@@ -30,20 +30,20 @@ elif [[ $target == "windows" ]] ; then
 fi
 
 cd gameSource
-make
-./makeEditor.sh
+make || exit 1
+./makeEditor.sh || exit 1
 
 cd ../server
-make
+make || exit 1
 
 cd $SCRIPTSDIR
 
 echo "Gathering Files..."
 
-./gatherData.sh all $TESTDIR rsync
-./gatherBuildFiles.sh game $TESTDIR
-./gatherBuildFiles.sh server $TESTDIR
-./gatherBinaries.sh $target all $TESTDIR
+./gatherData.sh all "$TESTDIR" rsync
+./gatherBuildFiles.sh game "$TESTDIR"
+./gatherBuildFiles.sh server "$TESTDIR"
+./gatherBinaries.sh "$target" all "$TESTDIR"
 
 echo 0 > $TESTDIR/settings/fullscreen.ini
 echo 1 > $TESTDIR/settings/useCustomServer.ini

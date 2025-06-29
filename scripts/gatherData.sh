@@ -37,14 +37,14 @@ source=$DATADIR
 rm -f $source/*/*.fcz
 
 for item in ${target[@]} ; do
-	if [ $mode == "symlink" ] ; then 
+	if [[ $mode == "symlink" ]] ; then 
 		#Create symlink only
-		ln -s $source/$item $destination
-	elif [ $mode == "copy" ] ; then
+		ln -s "${source}/${item}" "$destination"
+	elif [[ $mode == "copy" ]] ; then
 		#Copy from repo
-		cp -R $source/$item $destination
-	elif [ $mode == "rsync" ]; then
-		rsync -r $source/$item $destination
+		cp -R "${source}/${item}" "$destination"
+	elif [[ $mode == "rsync" ]]; then
+		rsync -r "${source}/${item}" "$destination"
 	fi
 done
 
