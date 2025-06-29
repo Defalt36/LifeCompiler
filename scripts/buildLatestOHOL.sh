@@ -8,25 +8,21 @@ fi
 
 target=$1
 
-RELEASEDIR=$BUILDSDIR/$RELEASENAME-$TIMESTAMP-$target
-
-pushd .
-
 cd $WORKDIR
 
 if [ ! -e minorGems ]
 then
-	git clone https://github.com/twohoursonelife/minorGems.git	
+	git clone https://github.com/jasonrohrer/minorGems.git	
 fi
 
 if [ ! -e OneLife ]
 then
-	git clone https://github.com/twohoursonelife/OneLife.git
+	git clone https://github.com/jasonrohrer/OneLife.git
 fi
 
 if [ ! -e OneLifeData7 ]
 then
-	git clone https://github.com/twohoursonelife/OneLifeData7.git	
+	git clone https://github.com/jasonrohrer/OneLifeData7.git	
 fi
 
 
@@ -60,33 +56,35 @@ then
 fi
 
 echo
-echo "Building v$latestVersion..."
+echo "Building OneLife_v$latestVersion..."
+echo
 
-cd OneLife
+cd $GAMEDIR
 
-chmod u+x ./configure
+chmod u+x ./configure || exit 1
 
 if [ $target == "linux" ] ; then
-	./configure 1
+	./configure 1 || exit 1
 elif [ $target == "windows" ] ; then
-	./configure 5
+	./configure 5 || exit 1
 fi
 
 cd gameSource
 
 make || exit 1
 
-popd
+cd $SCRIPTSDIR
 
+RELEASEDIR="${BUILDSDIR}/OneLife_v${latestVersion}-${target}"
 mkdir $RELEASEDIR
 
-$ASSISTANTDIR/scripts/gatherData.sh game $RELEASEDIR copy
-$ASSISTANTDIR/scripts/gatherBuildFiles.sh game $RELEASEDIR
-$ASSISTANTDIR/scripts/gatherBinaries.sh $target game $RELEASEDIR
+$ASSISTANTDIR/scripts/gatherData.sh game "$RELEASEDIR" copy
+$ASSISTANTDIR/scripts/gatherBuildFiles.sh game "$RELEASEDIR"
+$ASSISTANTDIR/scripts/gatherBinaries.sh "$target" game "$RELEASEDIR"
 
-ln -vsf $RELEASEDIR $BUILDSDIR/$RELEASENAME
+#ln -vsf $RELEASEDIR $BUILDSDIR/$RELEASENAME
 
-7z a $BUILDSDIR/$(basename $RELEASEDIR).zip $BUILDSDIR/$RELEASENAME
+7z a $RELEASEDIR.zip $RELEASEDIR
 
 echo
 echo "Done building v$latestVersion."
