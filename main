@@ -181,6 +181,8 @@ function x-libraries {
 }
 
 function x-platform {
+    pushd .
+    
     local platform=$1
     if [ $# -ne 1 ] ; then
         echo "No parameters provided, assuming: '$TARGETSYSTEM'."
@@ -195,9 +197,10 @@ function x-platform {
     ./configure $platform
     cd $GAMEDIR/server
     ./configure $platform
-    cd $START_DIR
     
     pathfix $platform
+    
+    popd
 }
 
 function x-reconfigure {
