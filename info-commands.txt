@@ -1,3 +1,4 @@
+compfix..............Fix common errors that prevent compilation.
 eolfix...............Fix some line endings if cloned on windows.
 gitfix...............Fix slowness when cloning repos.
 pathfix..............Fix mistakes due to incorrect path variable.

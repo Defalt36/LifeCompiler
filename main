@@ -68,6 +68,10 @@ function makeall {
     makeserver
 }
 
+function compfix {
+    cp "${ASSISTANTDIR}/utilities/Makefile.MinGWCross" "${MINORDIR}/game/platforms/SDL/Makefile.MinGWCross"
+}
+
 function eolfix {
     echo $GAMEDIR
 
