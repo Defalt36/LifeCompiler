@@ -68,10 +68,6 @@ function makeall {
     makeserver
 }
 
-function compfix {
-    cp "${ASSISTANTDIR}/utilities/Makefile.MinGWCross" "${MINORDIR}/game/platforms/SDL/Makefile.MinGWCross"
-}
-
 function eolfix {
     echo $GAMEDIR
 
@@ -221,7 +217,7 @@ function x-reconfigure {
 }
 
 function x-reload {
-    source $START_DIR/main
+    source $START_DIR/xlife
 }
 
 echo -e "\nThe following functions can be used:\n"
@@ -231,4 +227,5 @@ cat $START_DIR/info-commands.txt
 echo -e "\nThe following scripts are avaliable:\n"
 find $START_DIR/scripts -type f -exec basename -s .sh {} \;
 
-echo -e "\nYou can use the xlife command to run scripts above.\n"
+echo -e "\nYou can use the xlife command to run scripts above."
+echo "e.g. xlife installAllRequirements"

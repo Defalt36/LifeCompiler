@@ -1,12 +1,22 @@
-compfix..............Fix common errors that prevent compilation.
-eolfix...............Fix some line endings if cloned on windows.
+Miscelaneous Commands:
+olfix................Fix some line endings if cloned on windows.
 gitfix...............Fix slowness when cloning repos.
 pathfix..............Fix mistakes due to incorrect path variable.
+runtest..............Build game and server and run test.
+showhidden...........Show hidden commands.
+
+Compile Commands (You may need to run x-platform before running them):
 makeall..............Re-compile all binaries.
 makeeditor...........Re-compile editor binary.
 makegame.............Re-compile game binary.
 makeserver...........Re-compile server binary.
-runtest..............Build game and server and run test.
-showhidden...........Show hidden commands.
 
+Advanced Commands:
+x-autostart..........Set assistant to autorun when you open WSL.
+x-default............Revert to default settings.
+x-libraries..........Extracts pre-compiled libraries.
+x-platform...........It sets the target platform.
+x-reconfigure........Changes default platform and repo settings.
+
+Main Command:
 xlife..................Used to run scripts and commands.
