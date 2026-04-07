@@ -63,7 +63,9 @@ fi
 rm -f $destination/settings/email.ini
 rm -f $destination/settings/accountKey.ini
 
-
 # remove all editor backup files
 find $destination -name "*~" -exec rm -f {} \;
+
+# remove cache from destination
+find $destination -name "*.fcz" -type f -delete
 

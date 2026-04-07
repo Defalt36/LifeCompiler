@@ -33,8 +33,8 @@ mode=$3
 
 source=$DATADIR
 
-#clearing cache of data repository
-rm -f $source/*/*.fcz
+# remove cache from data repository
+find $source -name "*.fcz" -type f -delete
 
 for item in ${target[@]} ; do
 	if [[ $mode == "symlink" ]] ; then 
