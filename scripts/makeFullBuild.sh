@@ -1,8 +1,9 @@
 #!/bin/bash
 
 if [ $# -ne 1 ] ; then
-	echo "You must use one argument. Open ${0##*/} in a file editor for more info."
+	echo "You must use one argument."
     # First argument: Target 'linux' or 'windows'
+    echo "First argument: Target 'linux' or 'windows'"
 	exit
 fi
 
@@ -38,15 +39,15 @@ make || exit 1
 
 cd $SCRIPTSDIR
 
-echo "Gathering Files..."
+echo -e "\nCopying files to ${RELEASEDIR}...\n"
 
 ./gatherData.sh all "$RELEASEDIR" copy
 ./gatherBuildFiles.sh game "$RELEASEDIR"
 ./gatherBuildFiles.sh server "$RELEASEDIR"
 ./gatherBinaries.sh "$target" all "$RELEASEDIR"
 
-#ln -sf $RELEASEDIR $RELEASENAME
-
-echo "Compressing Files..."
+echo -e "\nCompressing files...\n"
 
 7z a $RELEASEDIR.zip $RELEASEDIR
+
+echo -e "\nDone building."

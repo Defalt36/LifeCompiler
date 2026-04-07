@@ -1,8 +1,9 @@
 #!/bin/bash
 
 if [ $# -ne 1 ] ; then
-	echo "You must use one argument. Open ${0##*/} in a file editor for more info."
+	echo "You must use one argument."
     # First argument: Target 'linux' or 'windows'
+    echo "First argument: Target 'linux' or 'windows'"
 	exit
 fi
 
@@ -51,7 +52,7 @@ then
 	latestVersion=$latestTaggedVersionA
 fi
 
-echo "\nBuilding 2HOL v$latestVersion...\n"
+echo -e "\nBuilding 2HOL_v$latestVersion...\n"
 
 cd $GAMEDIR
 
@@ -69,16 +70,14 @@ cd $SCRIPTSDIR
 RELEASEDIR="${BUILDSDIR}/2HOL_v${latestVersion}-${target}"
 mkdir $RELEASEDIR
 
-echo "\nCopying files to ${RELEASEDIR}...\n"
+echo -e "\nCopying files to ${RELEASEDIR}...\n"
 
 $ASSISTANTDIR/scripts/gatherData.sh game "$RELEASEDIR" copy
 $ASSISTANTDIR/scripts/gatherBuildFiles.sh game "$RELEASEDIR"
 $ASSISTANTDIR/scripts/gatherBinaries.sh "$target" game "$RELEASEDIR"
 
-echo "\nCompressing files...\n"
+echo -e "\nCompressing files...\n"
 
 7z a $RELEASEDIR.zip $RELEASEDIR
 
-echo "\nDone building 2HOL v$latestVersion."
-
-
+echo -e "\nDone building 2HOL v$latestVersion."

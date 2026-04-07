@@ -1,8 +1,9 @@
 #!/bin/bash
 
 if [ $# -ne 1 ] ; then
-	echo "You must use one argument. Open ${0##*/} in a file editor for more info."
+	echo "You must use one argument."
     # First argument: Target 'linux' or 'windows'
+    echo "First argument: Target 'linux' or 'windows'"
 	exit
 fi
 
@@ -43,26 +44,19 @@ git fetch --tags
 latestTaggedVersionB=`git for-each-ref --sort=-creatordate --format '%(refname:short)' --count=1 refs/tags/OneLife_v* | sed -e 's/OneLife_v//'`
 git checkout -q OneLife_v$latestTaggedVersionB
 
-rm */cache.fcz
-
 cd ..
 
 latestVersion=$latestTaggedVersionB
-
-
 if [ $latestTaggedVersionA -gt $latestTaggedVersionB ]
 then
 	latestVersion=$latestTaggedVersionA
 fi
 
-echo
-echo "Building OneLife_v$latestVersion..."
-echo
+echo -e "\nBuilding OHOL_v$latestVersion...\n"
 
 cd $GAMEDIR
 
 chmod u+x ./configure || exit 1
-
 if [ $target == "linux" ] ; then
 	./configure 1 || exit 1
 elif [ $target == "windows" ] ; then
@@ -70,23 +64,20 @@ elif [ $target == "windows" ] ; then
 fi
 
 cd gameSource
-
 make || exit 1
-
 cd $SCRIPTSDIR
 
-RELEASEDIR="${BUILDSDIR}/OneLife_v${latestVersion}-${target}"
+RELEASEDIR="${BUILDSDIR}/OHOL_v${latestVersion}-${target}"
 mkdir $RELEASEDIR
+
+echo -e "\nCopying files to ${RELEASEDIR}...\n"
 
 $ASSISTANTDIR/scripts/gatherData.sh game "$RELEASEDIR" copy
 $ASSISTANTDIR/scripts/gatherBuildFiles.sh game "$RELEASEDIR"
 $ASSISTANTDIR/scripts/gatherBinaries.sh "$target" game "$RELEASEDIR"
 
-#ln -vsf $RELEASEDIR $BUILDSDIR/$RELEASENAME
+echo -e "\nCompressing files...\n"
 
 7z a $RELEASEDIR.zip $RELEASEDIR
 
-echo
-echo "Done building v$latestVersion."
-
-
+echo -e "\nDone building OHOLv$latestVersion."
