@@ -1,12 +1,19 @@
 #!/bin/bash
 
 if [ $# -ne 1 ] ; then
-	echo "You must use one argument. Open ${0##*/} in a file editor for more info."
+	echo "You must use one argument."
     # First argument: Mode 'shallow' or 'full'
+    echo "First argument: Mode 'shallow' or 'full'"
 	exit
 fi
 
 mode=$1
+
+echo "This script clones the repositories configured in settings.sh. It overrides the currently cloned repositories.\n"
+echo "Procced with cloning:"
+echo -e "\t${REMOTEGAME_USER}/${REMOTEGAME}:${REMOTEGAME_BRANCH}\n\t${REMOTEMINOR_USER}/${REMOTEMINOR}:${REMOTEMINOR_BRANCH}\n\t${REMOTEDATA_USER}/${REMOTEDATA}:${REMOTEDATA_BRANCH}"
+read -rp "Continue? [y/N] " c && [[ $c == [yY] ]] || exit
+echo
 
 cd $WORKDIR
 
