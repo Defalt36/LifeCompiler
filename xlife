@@ -107,11 +107,11 @@ function pathfix {
     fi
 }
 
-function life {
+function xlife {
     # Update TIMESTAMP everytime we want to run a script
     export TIMESTAMP=$(date '+(%F,%H%M)')
     if [ $# -lt 1 ] ; then
-        echo "Usage: 'life [SCRIPT_NAME]' or 'life [COMMAND_NAME]'"
+        echo "Usage: 'xlife [SCRIPT_NAME]' or 'xlife [COMMAND_NAME]'"
     else
         if [ $# -ge 1 ] ; then
             if [[ $2 == "linux" || $2 == "windows" ]] ; then
@@ -130,7 +130,7 @@ function life {
 
 function x-autostart {
     line1="# Source LifeCompiler by Defalt36" 
-    line2="source "${ASSISTANTDIR}/main""
+    line2="source "${ASSISTANTDIR}/xlife""
     
     if grep -Fxq "$line1" ~/.bashrc ; then
         sed -i "\|^${line1}\$|d" ~/.bashrc
@@ -231,4 +231,4 @@ cat $START_DIR/info-commands.txt
 echo -e "\nThe following scripts are avaliable:\n"
 find $START_DIR/scripts -type f -exec basename -s .sh {} \;
 
-echo -e "\nYou can use the life command to run scripts above.\n"
+echo -e "\nYou can use the xlife command to run scripts above.\n"
