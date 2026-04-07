@@ -28,6 +28,8 @@ export REMOTEDATA_BRANCH=master
 export BUILDSDIR=$WORKDIR/builds
 export LIBRARYDIR=$WORKDIR/dependencies
 
+export DISCORD_SDK_PATH=$LIBRARYDIR/discord_game_sdk
+
 export TESTBUILDPATH=$BUILDSDIR/TEST_BUILD
 
 if [ ! -d $BUILDSDIR ] ; then
