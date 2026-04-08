@@ -5,7 +5,7 @@ text=auto
 *.txt text eol=lf
 *.sh text eol=lf
 *.py text eol=lf
-main text eol=lf
+xlife text eol=lf
 configure text eol=lf
 MakeFile.* text eol=lf
 
