@@ -179,6 +179,8 @@ function x-libraries {
 function x-platform {
     pushd .
     
+    eolfix
+    
     local platform=$1
     if [ $# -ne 1 ] ; then
         echo "No parameters provided, assuming: '$TARGETSYSTEM'."
@@ -190,8 +192,10 @@ function x-platform {
         platform=5
     fi
     cd $GAMEDIR
+    chmod u+x ./configure || exit 1
     ./configure $platform
     cd $GAMEDIR/server
+    chmod u+x ./configure || exit 1
     ./configure $platform
     
     pathfix $platform
@@ -227,5 +231,4 @@ cat $START_DIR/info-commands.txt
 echo -e "\nThe following scripts are avaliable:\n"
 find $START_DIR/scripts -type f -exec basename -s .sh {} \;
 
-echo -e "\nYou can use the xlife command to run scripts above."
-echo "e.g. xlife installAllRequirements"
+echo -e "\nYou can use the xlife command to run scripts above. e.g. xlife installAllRequirements"

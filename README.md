@@ -3,5 +3,5 @@
 <h2>Usage</h2>
 
 <p>
-    <code>Run `source main` to start assistant.</code>
+    <code>Run `source xlife` to start assistant.</code>
 </p>
