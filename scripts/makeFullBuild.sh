@@ -48,6 +48,17 @@ echo -e "\nCopying files to ${RELEASEDIR}...\n"
 
 echo -e "\nCompressing files...\n"
 
+cd $RELEASEDIR/settings
+
+echo 1 > tutorialDone.ini
+echo 0 > requireTicketServerCheck.ini
+echo 1 > useCustomServer.ini 
+
+echo "localhost" > customServerAddress.ini
+echo 8005 > customServerPort.ini
+
+cd $SCRIPTSDIR
+
 7z a $RELEASEDIR.zip $RELEASEDIR
 
 echo -e "\nDone building."
