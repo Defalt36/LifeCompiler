@@ -19,7 +19,7 @@ if [ $target == "windows" ] ; then
 	cp $GAMEDIR/build/win32/*.dll $destination
     cp $DISCORD_SDK_PATH/lib/x86/discord_game_sdk.dll $destination
     #cp /usr/i686-w64-mingw32/bin/*.dll $destination
-elif [ $target == "linux" ]
+elif [ $target == "linux" ] ; then
     if [[ ! -f ./discord_game_sdk.so ]]; then
         sudo cp $DISCORD_SDK_PATH/lib/x86_64/discord_game_sdk.so $destination
         sudo chmod a+r $destination/discord_game_sdk.so
