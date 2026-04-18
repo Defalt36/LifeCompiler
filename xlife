@@ -158,7 +158,11 @@ function x-libraries {
 function x-platform {
     pushd .
     
-    eolfix
+    find $MINORDIR $GAMEDIR -name "configure" -type f | while read -r f ; do
+        if file "$f" | grep -q "CRLF" ; then
+            dos2unix "$f"
+        fi
+    done
     
     local platform=$1
     if [ $# -ne 1 ] ; then
