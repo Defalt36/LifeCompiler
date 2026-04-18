@@ -56,16 +56,12 @@ echo -e "\nBuilding OHOL_v$latestVersion...\n"
 
 cd $GAMEDIR
 
-# Add discord integration
-if [ -d $DISCORD_SDK_PATH ]; then
-	discord_param="\"$MINORDIR\" --discord_sdk_path \"$DISCORD_SDK_PATH\""
-fi
 
 chmod u+x ./configure || exit 1
 if [ $target == "linux" ] ; then
-	./configure 1 $discord_param || exit 1
+	./configure 1 || exit 1
 elif [ $target == "windows" ] ; then
-	./configure 5 $discord_param || exit 1
+	./configure 5 || exit 1
 fi
 
 cd gameSource

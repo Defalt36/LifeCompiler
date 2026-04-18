@@ -28,7 +28,7 @@ export REMOTEDATA_BRANCH=master
 export BUILDSDIR=$WORKDIR/builds
 export LIBRARYDIR=$WORKDIR/dependencies
 
-export DISCORD_SDK_PATH=$LIBRARYDIR/discord_game_sdk
+export DISCORD_SDK=$LIBRARYDIR/discord_game_sdk
 
 export TESTBUILDPATH=$BUILDSDIR/TEST_BUILD
 

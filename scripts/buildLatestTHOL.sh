@@ -57,8 +57,8 @@ echo -e "\nBuilding 2HOL_v$latestVersion...\n"
 cd $GAMEDIR
 
 # Add discord integration
-if [ -d $DISCORD_SDK_PATH ]; then
-	discord_param="\"$MINORDIR\" --discord_sdk_path \"$DISCORD_SDK_PATH\""
+if [ -d $DISCORD_SDK ]; then
+	discord_param="\"$MINORDIR\" --discord_sdk_path \"$DISCORD_SDK\""
 fi
 
 chmod u+x ./configure || exit 1
