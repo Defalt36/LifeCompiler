@@ -103,27 +103,6 @@ function pathfix {
     fi
 }
 
-function xlife {
-    # Update TIMESTAMP everytime we want to run a script
-    export TIMESTAMP=$(date '+(%F,%H%M)')
-    if [ $# -lt 1 ] ; then
-        echo "Usage: 'xlife [SCRIPT_NAME]' or 'xlife [COMMAND_NAME]'"
-    else
-        if [ $# -ge 1 ] ; then
-            if [[ $2 == "linux" || $2 == "windows" ]] ; then
-                pathfix $2
-            fi
-        fi
-        if $(find $START_DIR/scripts -iname "$1.sh" -exec false {} +) ; then
-            echo "No script '$1' found."
-        elif [ $(find $START_DIR/scripts -iname "$1.sh" | wc -l) -ne 1 ] ; then
-            echo "More than one script named '$1'."
-        else
-            find $START_DIR/scripts -iname "$1.sh" -exec echo -e "Running: {}\n" \; -exec {} ${@:2} \;
-        fi
-    fi
-}
-
 function x-autostart {
     line1="# Source LifeCompiler by Defalt36" 
     line2="source "${ASSISTANTDIR}/xlife""
@@ -223,6 +202,29 @@ function x-reconfigure {
 function x-reload {
     source $START_DIR/xlife
 }
+
+function xlife {
+    # Update TIMESTAMP everytime we want to run a script
+    export TIMESTAMP=$(date '+(%F,%H%M)')
+    if [ $# -lt 1 ] ; then
+        echo "Usage: 'xlife [SCRIPT_NAME]' or 'xlife [COMMAND_NAME]'"
+    else
+        if [ $# -ge 1 ] ; then
+            if [[ $2 == "linux" || $2 == "windows" ]] ; then
+                pathfix $2
+            fi
+        fi
+        if $(find $START_DIR/scripts -iname "$1.sh" -exec false {} +) ; then
+            echo "No script '$1' found."
+        elif [ $(find $START_DIR/scripts -iname "$1.sh" | wc -l) -ne 1 ] ; then
+            echo "More than one script named '$1'."
+        else
+            find $START_DIR/scripts -iname "$1.sh" -exec echo -e "Running: {}\n" \; -exec {} ${@:2} \;
+        fi
+    fi
+}
+
+alias xla='xlife'
 
 echo -e "\nThe following functions can be used:\n"
 #declare -F | awk '{print $NF}' | sort | egrep -v "^_"
