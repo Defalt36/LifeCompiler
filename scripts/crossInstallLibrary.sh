@@ -2,7 +2,7 @@
 
 if [ $# -lt 1 ] ; then
     echo "You must at least use one argument. Open ${0##*/} in a file editor for more info."
-    # First argument: Library 'libpng', 'libz', 'libsdl' or 'libfreetype'
+    # First argument: Library 'libpng', 'libz', 'libsdl', 'libsdl2' or 'libfreetype'
     exit
 fi
 
@@ -10,6 +10,7 @@ sdkdisc=false
 libz=false
 libpng=false
 libsdl=false
+libsdl2=false
 libfreetype=false
 
 for arg in "$@"; do
@@ -21,6 +22,8 @@ for arg in "$@"; do
         libpng=true
     elif [[ $arg == "libsdl" ]] ; then
         libsdl=true
+    elif [[ $arg == "libsdl2" ]] ; then
+        libsdl2=true
     elif [[ $arg == "libfreetype" ]] ; then
         libfreetype=true
     else
@@ -124,6 +127,32 @@ if [[ $libsdl == "true" ]] ; then
     cd ..
 fi
 
+if [[ $libsdl2 == "true" ]] ; then
+    echo
+    echo "Preparing LibSDL2..."
+    
+    if [ ! -d SDL2-2.30.0 ] ; then
+        wget https://www.libsdl.org/release/SDL2-2.30.0.tar.gz -O- | tar xfz -
+        # if wget fails try alternative mirror
+        if [ $? -ne 0 ]; then
+            wget https://github.com/libsdl-org/SDL/releases/download/release-2.30.0/SDL2-2.30.0.tar.gz -O- | tar xfz -
+        fi
+    fi
+
+    cd SDL2-2.30.0 || exit 1
+    ./configure \
+        --bindir=$prefixdir/bin \
+        --libdir=$prefixdir/lib \
+        --includedir=$prefixdir/include \
+        --host=$host \
+        --prefix=$prefixdir \
+        CPPFLAGS="-I${prefixdir}/include" \
+        LDFLAGS="-L${prefixdir}/lib"
+    make
+    sudo make install
+    cd ..
+fi
+
 if [[ $libfreetype == "true" ]] ; then
     echo
     echo "Preparing FreeType2..."
@@ -149,5 +178,3 @@ if [[ $libfreetype == "true" ]] ; then
     sudo make install
     cd ..
 fi
-
-
