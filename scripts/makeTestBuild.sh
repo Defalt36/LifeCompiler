@@ -40,7 +40,7 @@ cd $SCRIPTSDIR
 
 echo "Gathering Files..."
 
-./gatherData.sh all "$TESTDIR" rsync
+./gatherData.sh all "$TESTDIR" symlink
 ./gatherBuildFiles.sh game "$TESTDIR"
 ./gatherBuildFiles.sh server "$TESTDIR"
 ./gatherBinaries.sh "$target" all "$TESTDIR"

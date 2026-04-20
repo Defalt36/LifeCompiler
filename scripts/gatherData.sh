@@ -39,7 +39,14 @@ find $source -name "*.fcz" -type f -delete
 for item in ${target[@]} ; do
 	if [[ $mode == "symlink" ]] ; then 
 		#Create symlink only
-		ln -s "${source}/${item}" "$destination"
+        if [ -e "$destination/$item" ]; then
+            continue
+        fi
+        if [ -n "$WSL_DISTRO_NAME" ]; then
+            cmd.exe /c mklink /J $(wslpath -w "$destination/$item") $(wslpath -w "${source}/${item}")
+        else
+            ln -s "${source}/${item}" "$destination/$item"
+        fi
 	elif [[ $mode == "copy" ]] ; then
 		#Copy from repo
 		cp -R "${source}/${item}" "$destination"
