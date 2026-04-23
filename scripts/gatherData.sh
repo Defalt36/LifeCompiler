@@ -50,8 +50,6 @@ for item in ${target[@]} ; do
 	elif [[ $mode == "copy" ]] ; then
 		#Copy from repo
 		cp -R "${source}/${item}" "$destination"
-	elif [[ $mode == "rsync" ]]; then
-		rsync -r "${source}/${item}" "$destination"
 	fi
 done
 
