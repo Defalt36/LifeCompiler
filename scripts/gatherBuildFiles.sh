@@ -1,14 +1,22 @@
 #!/bin/bash
 
 if [ $# -ne 2 ] ; then
-	echo "You must use two arguments. Open ${0##*/} in a file editor for more info."
-    # First argument: Target 'game' 'editor' or 'server'
-	# Second argument: Destination
+	echo "You must use two arguments."
+    echo "First argument; Target: 'game' 'editor' or 'server'."
+	echo "Second argument; Destination: '[path]'."
 	exit
 fi
 
 target=$1
 destination=$2
+
+if [ $target != 'linux' ] && [ $target != 'windows' ] ; then
+    echo "Unknown first argument: $target"
+    exit 1
+elif [ ! -d "destination" ] ; then
+    echo "Unknown second argument: $destination"
+    exit 1
+fi
 
 source=$GAMEDIR
 

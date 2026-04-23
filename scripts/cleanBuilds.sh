@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 for directory in $GAMEDIR $MINORDIR $SERVERDIR ; do
     find $directory -type f -name '*.o' -exec rm -vf {} +

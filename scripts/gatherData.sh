@@ -2,10 +2,25 @@
 
 if [ $# -ne 3 ] ; then
 	echo "You must use three arguments. Open ${0##*/} in a file editor for more info."
-	# First argument: Target 'game', 'editor', 'server' or 'all'
-	# Second argument: Destination
-	# Third argument: Mode 'copy', 'symlink', 'rsync'
+	echo "First argument; Target: 'game', 'editor', 'server' or 'all'."
+	echo "Second argument; Destination: '[path]'."
+	echo "Third argument; Mode: 'copy', 'symlink', 'rsync'."
 	exit
+fi
+
+target=$1
+destination=$2
+mode=$3
+
+if [ $target != 'linux' ] && [ $target != 'windows' ] ; then
+    echo "Unknown first argument: $target"
+    exit 1
+elif [ ! -d "destination" ] ; then
+    echo "Path was not found: $destination"
+    exit 1
+elif [ $mode != 'game' ] && [ $mode != 'editor' ] && [ $mode != 'server' ] && [ $mode != 'all' ] ; then
+    echo "Unknown third argument: $mode"
+    exit 1
 fi
 
 # Assets needed for the binaries
@@ -16,27 +31,24 @@ server=('faces' 'tutorialMaps')
 
 if [ $1 == "game" ] ; then
 	###
-	target=( ${common[@]} ${game[@]} )
+	targets=( ${common[@]} ${game[@]} )
 elif [ $1 == "editor" ] ; then
 	###
-	target=( ${common[@]} ${game[@]} ${editor[@]} )
+	targets=( ${common[@]} ${game[@]} ${editor[@]} )
 elif [ $1 == "server" ] ; then
 	###
-	target=( ${common[@]} ${server[@]} )
+	targets=( ${common[@]} ${server[@]} )
 elif [ $1 == "all" ] ; then
 	###
-	target=( ${common[@]} ${game[@]} ${editor[@]} ${server[@]} )
+	targets=( ${common[@]} ${game[@]} ${editor[@]} ${server[@]} )
 fi
-
-destination=$2
-mode=$3
 
 source=$DATADIR
 
 # remove cache from data repository
 find $source -name "*.fcz" -type f -delete
 
-for item in ${target[@]} ; do
+for item in ${targets[@]} ; do
 	if [[ $mode == "symlink" ]] ; then 
 		#Create symlink only
         if [ -e "$destination/$item" ]; then

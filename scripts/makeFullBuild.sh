@@ -2,15 +2,19 @@
 
 if [ $# -ne 1 ] ; then
 	echo "You must use one argument."
-    # First argument: Target 'linux' or 'windows'
-    echo "First argument: Target 'linux' or 'windows'"
+    echo "First argument; Target: 'linux' or 'windows'."
 	exit
 fi
 
 target=$1
 
+if [ $target != 'linux' ] && [ $target != 'windows' ] ; then
+    echo "Unknown first argument: $target"
+    exit 1
+fi
+
 RELEASEDIR="${BUILDSDIR}/${RELEASENAME}_$(BUILDSTAMP)-${target}"
-mkdir $RELEASEDIR
+mkdir -p $RELEASEDIR
 
 cd $GAMEDIR
 
@@ -21,7 +25,7 @@ chmod u+x ./gameSource/makeEditor.sh
 if [ $target == "linux" ] ; then
 	./configure 1 || exit 1
     cd server
-	.configure 1 || exit 1
+	./configure 1 || exit 1
     cd ..
 elif [ $target == "windows" ] ; then
 	./configure 5 || exit 1

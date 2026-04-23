@@ -1,10 +1,10 @@
 #!/bin/bash
 
 if [ $# -ne 3 ] ; then
-	echo "You must use three arguments. Open ${0##*/} in a file editor for more info."
-	# First argument: Target 'linux' or 'windows'
-	# Second argument: Binaries 'game', 'editor', 'server' or 'all'
-	# Third argument: Destination
+	echo "You must use three arguments."
+	echo "First argument; Target: 'linux' or 'windows'."
+	echo "Second argument; Binaries: 'game', 'editor', 'server' or 'all'."
+	echo "Third argument; Destination: '[path]'."
 	exit
 fi
 
@@ -12,6 +12,17 @@ fi
 target=$1
 binaries=$2
 destination=$3
+
+if [ $target != 'linux' ] && [ $target != 'windows' ] ; then
+    echo "Unknown first argument: $target"
+    exit 1
+elif [ $binaries != 'game' ] && [ $binaries != 'editor' ] && [ $binaries != 'server' ] && [ $binaries != 'all' ] ; then
+    echo "Unknown second argument: $binaries"
+    exit 1
+elif [ ! -d "destination" ] ; then
+    echo "Path was not found: $destination"
+    exit 1
+fi
 
 source=$GAMEDIR
 

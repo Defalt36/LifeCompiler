@@ -2,12 +2,16 @@
 
 if [ $# -ne 1 ] ; then
 	echo "You must use one argument."
-    # First argument: Target 'linux' or 'windows'
-    echo "First argument: Target 'linux' or 'windows'"
+    echo "First argument; Target: 'linux' or 'windows'."
 	exit
 fi
 
 target=$1
+
+if [ $target != 'linux' ] && [ $target != 'windows' ] ; then
+    echo "Unknown first argument: $target"
+    exit 1
+fi
 
 cd $WORKDIR
 

@@ -2,12 +2,15 @@
 
 if [ $# -ne 1 ] ; then
 	echo "You must use one argument."
-    # First argument: Mode 'shallow' or 'full'
-    echo "First argument: Mode 'shallow' or 'full'"
+    echo "First argument: Mode, 'shallow' or 'full'."
 	exit
 fi
 
 mode=$1
+if [ $mode != "shallow" ] && [ $mode != "full" ] ; then
+    echo "Unknown first argument: $mode"
+    exit 1
+fi
 
 echo "This script clones the repositories configured in settings.sh. It overrides the currently cloned repositories.\n"
 echo "Procced with cloning:"

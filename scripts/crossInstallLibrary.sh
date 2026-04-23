@@ -1,20 +1,13 @@
 #!/bin/bash
 
 if [ $# -lt 1 ] ; then
-    echo "You must at least use one argument. Open ${0##*/} in a file editor for more info."
-    # First argument: Library 'libpng', 'libz', 'libsdl', 'libsdl2' or 'libfreetype'
+    echo "You must at least use one argument."
+    echo "First argument: Library, 'libpng', 'libz', 'libsdl', 'libsdl2', 'libfreetype' or 'discsdk'."
     exit
 fi
 
-sdkdisc=false
-libz=false
-libpng=false
-libsdl=false
-libsdl2=false
-libfreetype=false
-
 for arg in "$@"; do
-    if [[ $arg == "sdkdisc" ]] ; then
+    if [[ $arg == "discsdk" ]] ; then
         sdkdisc=true
     elif [[ $arg == "libz" ]] ; then
         libz=true
@@ -44,7 +37,7 @@ fi
 
 cd $LIBRARYDIR
 
-if [[ $sdkdisc == "true" ]] ; then
+if [[ $discsdk == "true" ]] ; then
     echo
     echo "Preparing DiscordSDK..."
     

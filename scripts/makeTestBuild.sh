@@ -1,15 +1,20 @@
 #!/bin/bash
 
 if [ $# -ne 1 ] ; then
-	echo "You must use one argument. Open ${0##*/} in a file editor for more info."
-    # First argument: Target 'linux' or 'windows'
+	echo "You must use one argument."
+    echo "First argument; Target: 'linux' or 'windows'."
 	exit
 fi
 
 target=$1
 
+if [ $target != 'linux' ] && [ $target != 'windows' ] ; then
+    echo "Unknown first argument: $target"
+    exit 1
+fi
+
 TESTDIR=$TESTBUILDPATH
-mkdir $TESTDIR
+mkdir -p $TESTDIR
 
 cd $GAMEDIR
 
@@ -17,12 +22,12 @@ chmod u+x ./configure
 chmod u+x ./server/configure
 chmod u+x ./gameSource/makeEditor.sh
 
-if [[ $target == "linux" ]] ; then
+if [ $target == "linux" ] ; then
 	./configure 1 || exit 1
 	cd server
 	./configure 1 || exit 1
 	cd ..
-elif [[ $target == "windows" ]] ; then
+elif [ $target == "windows" ] ; then
 	./configure 5 || exit 1
 	cd server
 	./configure 5 || exit 1

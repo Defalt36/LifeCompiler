@@ -12,4 +12,4 @@ sudo apt-get --assume-yes install mingw-w64 build-essential
 
 cd $SCRIPTSDIR
 
-./crossInstallLibrary.sh sdkdisc libz libpng libsdl
+./crossInstallLibrary.sh libz libpng libsdl discsdk
