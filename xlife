@@ -13,6 +13,8 @@ if [[ "$START_DIR" == *[[:space:]]* ]]; then
     exit 1
 fi
 
+cp -n $START_DIR/settings.sh $START_DIR/defaultsettings.sh
+
 source $START_DIR/settings.sh
 chmod u+x -R $START_DIR
 

@@ -1,3 +1,5 @@
 
 programs/objectstranslator/output/*.txt
 programs/fontmaker/output/*.txt
+defaultsettings.sh
+
