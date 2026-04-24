@@ -83,7 +83,7 @@ function eolfix {
 }
 
 function gitfix {
-    sudo ifconfig eth0 mtu 1350
+    cp $START_DIR/utilities/git.sh /usr/local/bin/git 
 }
 
 function pathfix {

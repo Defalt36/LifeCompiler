@@ -1,6 +1,6 @@
 Miscelaneous Commands:
 olfix................Fix some line endings if cloned on windows.
-gitfix...............Fix slowness when cloning repos.
+gitfix...............Use windows git to fix slowness when using git commands.
 pathfix..............Fix mistakes due to incorrect path variable.
 runtest..............Build game and server and run test.
 showhidden...........Show hidden commands.
