@@ -15,33 +15,30 @@ fi
 
 cd $WORKDIR
 
-if [ ! -e minorGems ]
-then
-	git clone https://github.com/jasonrohrer/minorGems.git	
+$SCRIPTSDIR/cloneRepositories.sh "twohoursonelife"
+
+latestVersion=$($SCRIPTSDIR/checkoutLastTaggedVersion.sh OneLife)
+if [ -z $latestVersion ] ; then
+    echo "Failed to checkout last tagged version. Check if your repositories are correct."
+    exit 1
 fi
 
-if [ ! -e OneLife ]
-then
-	git clone https://github.com/jasonrohrer/OneLife.git
-fi
-
-if [ ! -e OneLifeData7 ]
-then
-	git clone https://github.com/jasonrohrer/OneLifeData7.git	
-fi
-
-
-latestVersion=$($SCRIPTSDIR/checkoutLastTaggedVersion.sh)
 echo -e "\nBuilding OHOL_v$latestVersion...\n"
 
 cd $GAMEDIR
 
-
 chmod u+x ./configure || exit 1
 if [ $target == "linux" ] ; then
-	./configure 1 || exit 1
+	target=1
 elif [ $target == "windows" ] ; then
-	./configure 5 || exit 1
+	target=5
+fi
+
+# Add discord integration
+if [ -d $DISCORD_SDK ]; then
+	./configure $target "$MINORDIR" --discord_sdk_path "$DISCORD_SDK" || exit 1
+else
+    ./configure $target || exit 1
 fi
 
 cd gameSource
@@ -61,4 +58,4 @@ echo -e "\nCompressing files...\n"
 
 7z a $RELEASEDIR.zip $RELEASEDIR
 
-echo -e "\nDone building OHOLv$latestVersion."
+echo -e "\nDone building OHOL_v$latestVersion."

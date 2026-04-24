@@ -15,21 +15,7 @@ fi
 
 cd $WORKDIR
 
-if [ ! -e minorGems ]
-then
-	git clone https://github.com/twohoursonelife/minorGems.git	
-fi
-
-if [ ! -e OneLife ]
-then
-	git clone https://github.com/twohoursonelife/OneLife.git
-fi
-
-if [ ! -e OneLifeData7 ]
-then
-	git clone https://github.com/twohoursonelife/OneLifeData7.git	
-fi
-
+$SCRIPTSDIR/cloneRepositories.sh "jasonrohrer"
 
 latestVersion=$($SCRIPTSDIR/checkoutLastTaggedVersion.sh 2HOL)
 if [ -z $latestVersion ] ; then
@@ -41,16 +27,18 @@ echo -e "\nBuilding 2HOL_v$latestVersion...\n"
 
 cd $GAMEDIR
 
-# Add discord integration
-if [ -d $DISCORD_SDK ]; then
-	discord_param="\"$MINORDIR\" --discord_sdk_path \"$DISCORD_SDK\""
-fi
-
 chmod u+x ./configure || exit 1
 if [ $target == "linux" ] ; then
-	./configure 1 $discord_param || exit 1
+	target=1
 elif [ $target == "windows" ] ; then
-	./configure 5 $discord_param || exit 1
+	target=5
+fi
+
+# Add discord integration
+if [ -d $DISCORD_SDK ]; then
+	./configure $target "$MINORDIR" --discord_sdk_path "$DISCORD_SDK" || exit 1
+else
+    ./configure $target || exit 1
 fi
 
 cd gameSource
@@ -70,4 +58,4 @@ echo -e "\nCompressing files...\n"
 
 7z a $RELEASEDIR.zip $RELEASEDIR
 
-echo -e "\nDone building 2HOL v$latestVersion."
+echo -e "\nDone building 2HOL_v$latestVersion."
