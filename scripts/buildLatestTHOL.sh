@@ -31,29 +31,10 @@ then
 fi
 
 
-cd minorGems
-git fetch --tags
-latestTaggedVersion=`git for-each-ref --sort=-creatordate --format '%(refname:short)' --count=1 refs/tags/2HOL_v* | sed -e 's/2HOL_v//'`
-git checkout -q 2HOL_v$latestTaggedVersion
-
-
-cd ../OneLife
-git fetch --tags
-latestTaggedVersionA=`git for-each-ref --sort=-creatordate --format '%(refname:short)' --count=1 refs/tags/2HOL_v* | sed -e 's/2HOL_v//'`
-git checkout -q 2HOL_v$latestTaggedVersionA
-
-
-cd ../OneLifeData7
-git fetch --tags
-latestTaggedVersionB=`git for-each-ref --sort=-creatordate --format '%(refname:short)' --count=1 refs/tags/2HOL_v* | sed -e 's/2HOL_v//'`
-git checkout -q 2HOL_v$latestTaggedVersionB
-
-cd ..
-
-latestVersion=$latestTaggedVersionB
-if [ $latestTaggedVersionA -gt $latestTaggedVersionB ]
-then
-	latestVersion=$latestTaggedVersionA
+latestVersion=$($SCRIPTSDIR/checkoutLastTaggedVersion.sh 2HOL)
+if [ -z $latestVersion ] ; then
+    echo "Failed to checkout last tagged version. Check if your repositories are correct."
+    exit 1
 fi
 
 echo -e "\nBuilding 2HOL_v$latestVersion...\n"
@@ -81,9 +62,9 @@ mkdir $RELEASEDIR
 
 echo -e "\nCopying files to ${RELEASEDIR}...\n"
 
-$ASSISTANTDIR/scripts/gatherData.sh game "$RELEASEDIR" copy
-$ASSISTANTDIR/scripts/gatherBuildFiles.sh game "$RELEASEDIR"
-$ASSISTANTDIR/scripts/gatherBinaries.sh "$target" game "$RELEASEDIR"
+$SCRIPTSDIR/gatherData.sh game "$RELEASEDIR" copy
+$SCRIPTSDIR/gatherBuildFiles.sh game "$RELEASEDIR"
+$SCRIPTSDIR/gatherBinaries.sh "$target" game "$RELEASEDIR"
 
 echo -e "\nCompressing files...\n"
 
