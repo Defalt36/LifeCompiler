@@ -57,7 +57,7 @@ echo 8005 > $TESTDIR/settings/customServerPort.ini
 echo 1 > $TESTDIR/settings/vogModeOn.ini
 echo 1 > $TESTDIR/settings/tutorialDone.ini
 echo "USER" > $TESTDIR/settings/email.ini
-echo "PASS" > $TESTDIR/settings/password.ini
+echo "USER" > $TESTDIR/settings/password.ini
 
 echo 1 > $TESTDIR/settings/fovEnabled.ini
 echo 1 > $TESTDIR/settings/keyboardActions.ini

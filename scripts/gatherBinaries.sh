@@ -19,7 +19,7 @@ if [ $target != 'linux' ] && [ $target != 'windows' ] ; then
 elif [ $binaries != 'game' ] && [ $binaries != 'editor' ] && [ $binaries != 'server' ] && [ $binaries != 'all' ] ; then
     echo "Unknown second argument: $binaries"
     exit 1
-elif [ ! -d "destination" ] ; then
+elif [ ! -d "$destination" ] ; then
     echo "Path was not found: $destination"
     exit 1
 fi

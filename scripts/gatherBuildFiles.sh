@@ -10,10 +10,10 @@ fi
 target=$1
 destination=$2
 
-if [ $target != 'linux' ] && [ $target != 'windows' ] ; then
+if [ $target != 'game' ] && [ $target != 'editor' ] && [ $target != 'server' ] ; then
     echo "Unknown first argument: $target"
     exit 1
-elif [ ! -d "destination" ] ; then
+elif [ ! -d "$destination" ] ; then
     echo "Unknown second argument: $destination"
     exit 1
 fi

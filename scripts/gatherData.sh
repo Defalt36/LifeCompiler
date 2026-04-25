@@ -12,13 +12,13 @@ target=$1
 destination=$2
 mode=$3
 
-if [ $target != 'linux' ] && [ $target != 'windows' ] ; then
+if [ $target != 'game' ] && [ $target != 'editor' ] && [ $target != 'server' ] && [ $target != 'all' ] ; then
     echo "Unknown first argument: $target"
     exit 1
-elif [ ! -d "destination" ] ; then
+elif [ ! -d "$destination" ] ; then
     echo "Path was not found: $destination"
     exit 1
-elif [ $mode != 'game' ] && [ $mode != 'editor' ] && [ $mode != 'server' ] && [ $mode != 'all' ] ; then
+elif [ $mode != 'copy' ] && [ $mode != 'symlink' ] ; then
     echo "Unknown third argument: $mode"
     exit 1
 fi
