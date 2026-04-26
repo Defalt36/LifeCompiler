@@ -67,3 +67,8 @@ echo 1 > $TESTDIR/settings/useTestMap.ini
 echo 1 > $TESTDIR/settings/allowVOGMode.ini
 echo 1 > $TESTDIR/settings/allowMapRequests.ini
 echo "USER" > $TESTDIR/settings/vogAllowAccounts.ini
+
+echo 0 > $TESTDIR/settings/useCurseServer.ini
+echo 0 > $TESTDIR/settings/useFitnessServer.ini
+echo 0 > $TESTDIR/settings/useLifeTokenServer.ini
+echo 0 > $TESTDIR/settings/useLineageServer.ini
