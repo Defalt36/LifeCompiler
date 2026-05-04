@@ -23,36 +23,47 @@ function showhidden {
     declare -F | awk '{print $NF}' | sort | egrep -v "^_"
 }
 function runtest {
-    local platform=$1
+    local target=$1
+    local platform=$2
     if [ $# -ne 1 ] ; then
-        echo "No parameters provided, assuming: '$TARGETSYSTEM'."
-        platform=$TARGETSYSTEM
+        echo "No parameters provided, assuming: game."
+        target="game"
+    fi
+    
+    if [ -n "$WSL_DISTRO_NAME" ]; then
+        platform="windows"
+    else
+        platform="linux"
     fi
     
     # Test game
-    if [[ $platform == "linux" ]] ; then
-        cd $TESTBUILDPATH
-        cp $GAMEDIR/gameSource/OneLife OneLife
-        ./OneLife
-        cd -
-    elif [[ $platform == "windows" ]] ; then
-        cd $TESTBUILDPATH
-        cp "$GAMEDIR/gameSource/OneLife.exe" "OneLife.exe" 2>/dev/null || cp "$GAMEDIR/gameSource/OneLife" "OneLife.exe"
-        cmd.exe /c start "" "OneLife.exe"
-        cd -
+    if [[ $target == "game" || $target == "all" ]] ; then
+        if [[ $platform == "linux" ]] ; then
+            cd $TESTBUILDPATH
+            cp $GAMEDIR/gameSource/OneLife OneLife
+            ./OneLife
+            cd -
+        elif [[ $platform == "windows" ]] ; then
+            cd $TESTBUILDPATH
+            cp "$GAMEDIR/gameSource/OneLife.exe" "OneLife.exe" 2>/dev/null || cp "$GAMEDIR/gameSource/OneLife" "OneLife.exe"
+            cmd.exe /c start "" "OneLife.exe"
+            cd -
+        fi
     fi
     
     # Test server
-    if [[ $platform == "linux" ]] ; then
-        cd $TESTBUILDPATH
-        cp $GAMEDIR/server/OneLifeServer OneLifeServer
-        ./OneLifeServer
-        cd -
-    elif [[ $platform == "windows" ]] ; then
-        cd $TESTBUILDPATH
-        cp "$GAMEDIR/server/OneLifeServer.exe" "OneLifeServer.exe" 2>/dev/null || cp "$GAMEDIR/server/OneLifeServer" "OneLifeServer.exe"
-        cmd.exe /c start "" "OneLifeServer.exe"
-        cd -
+    if [[ $target == "server" || $target == "all" ]] ; then
+        if [[ $platform == "linux" ]] ; then
+            cd $TESTBUILDPATH
+            cp $GAMEDIR/server/OneLifeServer OneLifeServer
+            ./OneLifeServer
+            cd -
+        elif [[ $platform == "windows" ]] ; then
+            cd $TESTBUILDPATH
+            cp "$GAMEDIR/server/OneLifeServer.exe" "OneLifeServer.exe" 2>/dev/null || cp "$GAMEDIR/server/OneLifeServer" "OneLifeServer.exe"
+            cmd.exe /c start "" "OneLifeServer.exe"
+            cd -
+        fi
     fi
 }
 function makegame {
