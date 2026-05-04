@@ -14,3 +14,6 @@ Alternative: python showCharacterTable.py > files/custom_table.txt
 
 ### deleteSquaresFromCanvas.py
 Used mostly to create overlays. Behavior can only be edited in a text editor.
+
+### compileOutputToTarga.py
+Compile canvas to be tested in game.
