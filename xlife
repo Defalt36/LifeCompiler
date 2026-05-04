@@ -13,7 +13,7 @@ if [[ "$START_DIR" == *[[:space:]]* ]]; then
     exit 1
 fi
 
-cp -n $START_DIR/settings.sh $START_DIR/defaultsettings.sh
+cp --update=none $START_DIR/settings.sh $START_DIR/defaultsettings.sh
 
 source $START_DIR/settings.sh
 chmod u+x -R $START_DIR
@@ -167,6 +167,7 @@ function x-platform {
     done
     
     local platform=$1
+    local useDiscord=$2
     if [ $# -ne 1 ] ; then
         echo "No parameters provided, assuming: '$TARGETSYSTEM'."
         platform=$TARGETSYSTEM
@@ -176,12 +177,23 @@ function x-platform {
     elif [[ $platform == "windows" || $platform == "5" ]] ; then
         platform=5
     fi
-    cd $GAMEDIR
-    chmod u+x ./configure || exit 1
-    ./configure $platform
-    cd $GAMEDIR/server
-    chmod u+x ./configure || exit 1
-    ./configure $platform
+    
+    if [[ $useDiscord == "true" ]] ; then
+        cd $GAMEDIR
+        echo "Configuring to use with discord."
+        chmod u+x ./configure || exit 1
+        ./configure $platform "$MINORDIR" --discord_sdk_path "$DISCORD_SDK" || exit 1
+        cd $GAMEDIR/server
+        chmod u+x ./configure || exit 1
+        ./configure $platform "$MINORDIR" --discord_sdk_path "$DISCORD_SDK" || exit 1
+    else
+        cd $GAMEDIR
+        chmod u+x ./configure || exit 1
+        ./configure $platform
+        cd $GAMEDIR/server
+        chmod u+x ./configure || exit 1
+        ./configure $platform
+    fi
     
     pathfix $platform
     
