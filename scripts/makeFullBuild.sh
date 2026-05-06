@@ -13,7 +13,7 @@ if [ $target != 'linux' ] && [ $target != 'windows' ] ; then
     exit 1
 fi
 
-RELEASEDIR="${BUILDSDIR}/${RELEASENAME}_$(BUILDSTAMP)-${target}"
+RELEASEDIR="${BUILDSDIR}/${RELEASENAME}_${BUILDSTAMP}-${target}"
 mkdir -p $RELEASEDIR
 
 cd $GAMEDIR
