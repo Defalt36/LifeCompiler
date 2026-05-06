@@ -28,13 +28,12 @@ source=$GAMEDIR
 
 if [ $target == "windows" ] ; then
 	cp $GAMEDIR/build/win32/*.dll $destination
+    cp $GAMEDIR/build/win32/*.bat $destination
     cp $DISCORD_SDK/lib/x86/discord_game_sdk.dll $destination
     #cp /usr/i686-w64-mingw32/bin/*.dll $destination
 elif [ $target == "linux" ] ; then
-    if [[ ! -f ./discord_game_sdk.so ]]; then
-        sudo cp $DISCORD_SDK/lib/x86_64/discord_game_sdk.so $destination
-        sudo chmod a+r $destination/discord_game_sdk.so
-    fi
+    cp $DISCORD_SDK/lib/x86_64/discord_game_sdk.so $destination
+    chmod a+r $destination/discord_game_sdk.so
 fi
 
 if [ $binaries == "game" ] || [ $binaries == "all" ] ; then
